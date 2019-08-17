@@ -22,40 +22,55 @@ module.exports = {
                 res.status(500).send(error);
             }
 
-            res.send(result[0]);
+            if (! result[0]){
+                res.status(404).send('not found');
+            }else{
+                res.send(result[0]);
+            }
+
+            
         });
 
     },
 
     create: (req,res) => {
-
         repository.create(req.body, (error, result) => {
             if (error) {
                 res.status(500).send(error);
             }
 
             res.send(result);
+        
         });
 
     },
 
     update: (req,res) => {
-        const {id} = req.params;
-        const person = req.body;
+    //Atualiza o id do objeto do req.body
+        req.body.id = req.params.id;
+        repository.update(req.body, (error, result) => {
+            if (error) {
+                res.status(500).send(error);
+            }
+            console.log(req.body);
+            if (result.affectedRows == 0){
+                res.status(404).send('not found');
+            }else{
+                res.send(result);
+            }
 
-        persons[id-1] = person;
+        });
 
-//        persons.push(); Não precisa.
-
-        res.send(person);
     },
-
     delete: (req,res) => {
-        const {id} = req.params;
 
-        persons.splice(id-1, 1)
+        repository.delete(req.params, (error, result) => {
+            if (error) {
+                res.status(500).send(error);
+            }
 
-        res.send(204).send();      
-    }
+            res.status(204).send();
+        });
 
+    }  
 }

@@ -17,11 +17,11 @@ module.exports = {
     },
 
     update: (params, callback) => {
-        connection.query('UPDATE person SET name = ?, gender = ?, age = ?) WHERE id = ?', [params.name,
-        params.gender, params.age], callback);           
+        connection.query('UPDATE person SET name = ?, gender = ?, age = ? WHERE id = ?', [params.name,
+        params.gender, params.age, params.id], callback);           
     
 },
     delete: (params, callback) => {        
-        connection.query('DELETE * FROM person WHERE ID = ?', [params.id], callback);
+        connection.query('DELETE  FROM person WHERE ID = ?', [params.id], callback);
 }
 };
