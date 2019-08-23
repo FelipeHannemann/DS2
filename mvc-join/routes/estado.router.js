@@ -1,11 +1,11 @@
 const express = require('express');
 const routes = express.Router();
-const personController = require('../controller/person.controller');
+const estadoController = require('../controller/estado.controller');
 
-routes.get('/', personController.find);
-routes.post('/', personController.create);
-routes.get('/:id([0-9]+)', personController.findByID);
-routes.put('/:id([0-9]+)', personController.update);
-routes.delete('/:id([0-9]+)', personController.delete);
+routes.get('/', estadoController.find);
+routes.post('/', estadoController.create);
+routes.get('/:id([0-9]+)', estadoController.findByID);
+routes.put('/:id([0-9]+)', estadoController.update);
+routes.delete('/:id([0-9]+)', estadoController.delete);
 
 module.exports = routes;
