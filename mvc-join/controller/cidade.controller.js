@@ -10,7 +10,24 @@ module.exports = {
                 res.status(500).send(error);
             }
 
-            res.send(result);
+            const cidades = [];
+            //converte de RELACIONAL para OBJETO
+            for (item of result) {
+
+                let cidade = {
+                    id: item.cidade_id,
+                    nome: item.cidade_nome,
+                    estado:{
+                        id: item.estado_id,
+                        nome: item.estado_nome,
+                        sigra: item.estado_sigla
+                    }
+                }
+                cidades.push(cidade);
+
+            }
+
+            res.send(cidades);
         });
         
     },
@@ -34,11 +51,17 @@ module.exports = {
     },
 
     create: (req,res) => {
-        repository.create(req.body, (error, result) => {
+        //Converter de OBJETO para RELACIONAl
+        const cidade = {
+            nome: req.body.nome,
+            estado_id: req.body.estado.id
+        }
+
+        repository.create(cidade, (error, result) => {
             if (error) {
                 res.status(500).send(error);
             }
-
+            
             res.send(result);
         
         });
