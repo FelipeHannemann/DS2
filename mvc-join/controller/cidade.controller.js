@@ -42,6 +42,7 @@ module.exports = {
             if (!result[0]) {
                 res.status(404).send('not found');
             } else {
+                
                 res.send(result[0]);
             }
 
@@ -66,7 +67,6 @@ module.exports = {
             res.send(cidade);
         });
     },
-
     update: (req, res) => {
         const cidade = {
             nome: req.body.nome,

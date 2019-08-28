@@ -12,7 +12,7 @@ module.exports = {
 },
 
     findById: (params, callback) => {        
-        connection.query(query + ' WHERE ID = ?', [params.id], callback);
+        connection.query(query + ' WHERE c.ID = ?', [params.id], callback);
 },
 
     create: (params, callback) => {
