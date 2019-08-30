@@ -11,16 +11,14 @@ module.exports = {
 },
 
     create: (params) => {        
-        return knex('estado').insert({nome: params.nome, sigra:params.sigra})
-            
+        return knex('estado').insert(params)
     },
 
-    update: (params, callback) => {
-        connection.query('UPDATE estado SET nome = ?, sigra = ? WHERE id = ?', [params.nome,
-        params.sigra, params.id], callback);           
+    update: (params) => {
+        return knex('estado').update(params).where({id: params.id});         
     
 },
     delete: (params) => {    
-        return  knex('estado').where('ID', {id: params.id}).del();
+        return knex('estado').del().where({id: params.id});    
 }
 };
