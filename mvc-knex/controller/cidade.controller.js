@@ -75,8 +75,8 @@ module.exports = {
 
     },
     delete: (req, res) => {
-        repository.delete().then(result => {
-            res.status(204).send();
+        repository.delete(req.params).then(result => {
+            res.send(result[0]);
         }).catch(error => {
             res.status(500).send(error);
         });
