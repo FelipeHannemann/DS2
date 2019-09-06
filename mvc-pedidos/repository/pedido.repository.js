@@ -20,21 +20,21 @@ module.exports = {
 },
 
     findById: (params, callback) => {        
-        connection.query('SELECT * FROM vendedor WHERE ID = ?', [params.id], callback);
+        connection.query('SELECT * FROM pedido WHERE ID = ?', [params.id], callback);
 },
 
     create: (params, callback) => {
-            connection.query('INSERT INTO pedido (codigo,nome,email) VALUES(?,?,?)', [params.codigo,
-            params.nome, params.email], callback);           
+            connection.query('INSERT INTO pedido (CODIGO,DTPEDIDO,OBSERVACAO, VENDEDOR_ID, CLIENTE_ID) VALUES(?,?,?,?,?)',
+            [params.codigo, params.dtPedido, params.observacao, params.vendedor_id, params.cliente_id], callback);           
         
     },
 
     update: (params, callback) => {
-        connection.query('UPDATE vendedor SET codigo = ?, nome = ?, email = ? WHERE id = ?', [params.codigo,
-        params.nome, params.email, params.id], callback);           
+        connection.query('UPDATE pedido SET CODIGO = ?, DTPEDIDO = ?, OBSERVACAO = ?, VENDEDOR_ID = ?, CLIENTE_ID = ? WHERE id = ?',
+        [params.codigo, params.dtPedido, params.observacao, params.vendedor_id, params.cliente_id, params.id], callback);           
     
 },
     delete: (params, callback) => {        
-        connection.query('DELETE  FROM vendedor WHERE ID = ?', [params.id], callback);
+        connection.query('DELETE  FROM pedido WHERE ID = ?', [params.id], callback);
 }
 };
