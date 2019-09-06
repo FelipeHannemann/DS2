@@ -10,8 +10,8 @@ const query = 'SELECT P.ID AS ID_PED, P.CODIGO AS CODIGO_PED, P.DTPEDIDO AS DATA
               'FROM PEDIDO P '+ 
               'JOIN CLIENTE C ON P.CLIENTE_ID = C.ID '+
               'JOIN VENDEDOR V ON P.VENDEDOR_ID = V.ID '+
-              'JOIN PRODUTO PROD ON P.ID = PROD.ID ' +
-              'JOIN ITEMPEDIDO PEDITEM ON PEDITEM.PEDIDO_ID = P.ID';
+              'JOIN ITEMPEDIDO PEDITEM ON PEDITEM.PEDIDO_ID = P.ID ' +
+              'join produto PROD on PEDITEM.PEDIDO_ID = PROD.ID';
 
 module.exports = {
 
