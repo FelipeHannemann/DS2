@@ -12,37 +12,51 @@ module.exports = {
 
     find: (callback) => {
         connection.query(query, (error, resultPedido) => {
-            const idPedido = resultPedido[0].ID_PED;
-            const queryitens = 'Select ip.id as ip_id, ip.quantidade,  ip.VLRUNIT, ' +
-                'P.ID AS p_id, P.CODIGO, P.NOME, P.DESCRICAO, P.PRECO ' +
-                'from itempedido ip ' +
-                'INNER JOIN PRODUTO P ON P.ID = IP.PRODUTO_ID ' +
-                'WHERE IP.PEDIDO_ID = ? ' + idPedido;
 
-            connection.query(queryitens, (error, resultItens) => {
+            if (error) {
+                callback(error, false);
+                return;
+            }
+
+            const idPedido = resultPedido[0].ID_PED;
+
+            const queryItens = 'SELECT ip.id as ip_id, ip.quantidade, ip.vlrunit, ' +
+                'p.id as p_id, p.codigo, p.nome, p.descricao, p.preco ' +
+                'FROM itempedido ip ' +
+                'INNER JOIN produto p ON p.id = ip.produto_id ' +
+                'WHERE ip.pedido_id = ' + idPedido;
+
+            connection.query(queryItens, (error, resultItens) => {
+                if (error) {
+                    callback(error, false);
+                    return;
+                }
 
                 const itens = [];
 
                 for (item of resultItens) {
+
                     let itempedido = {
                         id: item.ip_id,
-                        qtdade: item.quantidade,
-                        vlrunit: item.VLRUNIT,
-                        produto:{
+                        qtdade: item.qtdade,
+                        vlrunit: item.vlrunit,
+                        produto: {
                             id: item.p_id,
-                            codigo: item.CODIGO,
-                            nome:item.NOME,
-                            descricao: item.DESCRICAO,
-                            preco: item.PRECO
+                            codigo: item.codigo,
+                            nome: item.nome,
+                            descricao: item.descricao,
+                            preco: item.preco
                         }
                     }
+
                     itens.push(itempedido);
+
                 }
 
                 resultPedido[0].itens = itens;
-                callback(error, resultPedido)
-            });
 
+                callback(error, resultPedido);
+            });
         });
     },
 
