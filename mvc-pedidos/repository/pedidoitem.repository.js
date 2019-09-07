@@ -24,8 +24,8 @@ module.exports = {
     },
 
     update: (params, callback) => {
-        connection.query('UPDATE ITEMPEDIDO SET QUANTIDADE = ?, VLRUNIT = ?, PRODUTO_ID = ?, PEDIDO_ID = ? WHERE id = ?',
-        [params.quantidade, params.vlrunit, params.produto_id, params.pedido_id], callback);              
+        connection.query('UPDATE ITEMPEDIDO SET QUANTIDADE = ?, VLRUNIT = ?, PRODUTO_ID = ?, PEDIDO_ID = ? WHERE ID = ?',
+        [params.quantidade, params.vlrunit, params.produto_id, params.pedido_id, params.id], callback);              
     
 },
     delete: (params, callback) => {        

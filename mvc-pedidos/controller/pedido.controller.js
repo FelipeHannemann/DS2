@@ -30,12 +30,7 @@ module.exports = {
                         nome: ped.NOME_VENDEDOR,
                         email: ped.EMAIL_VENDEDOR
                     },
-                    peditem: {
-                        id: ped.ID_PEDITEM,
-                        quantidade: ped.QTA_ITEM,
-                        vlrunit: ped.VLRUNIT_PEDITEM,
-                        nomeitem: ped.PROD_NOME     
-                    }
+                    itens: ped.itens
 
                 }
                 pedidos.push(pedido);
