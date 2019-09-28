@@ -117,7 +117,7 @@ module.exports = {
             };
             //Insere o cabeçalho do pedido   
             connection.query('INSERT INTO pedido (CODIGO,DTPEDIDO,OBSERVACAO, VENDEDOR_ID, CLIENTE_ID) VALUES(?,?,?,?,?)',
-                [params.codigo, params.dtPedido, params.observacao, params.vendedor_id, params.cliente_id], (error, cabecResult) => {
+                [params.codigo, params.dtPedido, params.observacao, params.vendedor.id, params.cliente.id], (error, cabecResult) => {
                     // Faz roolback, se error no cabecalho
                     if (error) {
                         connection.rollback(() =>{
@@ -129,14 +129,17 @@ module.exports = {
                     const pedidoId = cabecResult.id;
                     //Monta query de insercao de itens
                     let queryAux = '';
-                    let qrInsertItens = 'INSERT INTO ITEMPEDIDO (QUANTIDADE,VLRUNIT,PRODUTO_ID, PEDIDO_ID) VALUES';
+                    let qrInsertItens = 'INSERT INTO 
+                    ITEMPEDIDO (QUANTIDADE,VLRUNIT,PRODUTO_ID, PEDIDO_ID) VALUES';
                     //Insere os Itens do Pedido
                     for (item of params.itens) {
                         
-                        queryAux += queryAux == '' ? '' : ',' +  "("+ pedidoId +","+ item.produto.id +", "+ item.qtdade + ", "+ item.vlrunit +
-                        ")"
-                        callback(false, queryAux);
+                        queryAux += queryAux == '' ? '' : ',';
+                        queryAux += "("+ pedidoId +","+ item.produto.id +", "+ item.qtdade + ", "+ item.vlrunit + ")"
+                        
                     }
+                    qrInsertItens += queryAux; 
+                    callback(false, qrInsertItens);
                 });
         });
     },
