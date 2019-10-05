@@ -1,0 +1,48 @@
+<p>cliente works!</p>
+{{clientes|json}}
+
+
+<mat-card>
+
+    <table mat-table [dataSource]="clientes">
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let cliente"> {{cliente.id}} </td>
+        </ng-container>
+
+        <!-- codigo Column -->
+        <ng-container matColumnDef="codigo">
+            <th mat-header-cell *matHeaderCellDef> Codigo </th>
+            <td mat-cell *matCellDef="let cliente"> {{cliente.codigo}} </td>
+        </ng-container>
+
+        <!-- nome Column -->
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let cliente"> {{cliente.nome}} </td>
+        </ng-container>
+
+        <!-- email Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
+        </ng-container>
+
+        <!-- cidade Column -->
+        <ng-container matColumnDef="cidade">
+            <th mat-header-cell *matHeaderCellDef> Cidade/Uf </th>
+            <td mat-cell *matCellDef="let cliente"> {{cliente.cidade.nome}} / {{cliente.cidade.estado.sigla}}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+</mat-card>
