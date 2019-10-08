@@ -6,9 +6,13 @@ import { AppComponent } from './app.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatListModule} from '@angular/material/list';
-import {MatTableModule} from '@angular/material/table';
-import {MatCardModule} from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +25,11 @@ import {MatCardModule} from '@angular/material/card';
     BrowserAnimationsModule,
     MatListModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

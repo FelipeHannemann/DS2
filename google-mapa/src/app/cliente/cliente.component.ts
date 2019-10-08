@@ -8,7 +8,7 @@ import { ClienteService, ClienteEntity } from '../_services/cliente.service';
 })
 export class ClienteComponent implements OnInit {
 
-  public displayedColumns: string[] = ['id', 'codigo', 'nome', 'email', 'cidade'];
+  public displayedColumns: string[] = ['codigo', 'nome', 'email', 'cidade'];
 
   public clientes: ClienteEntity[] = [];
 
