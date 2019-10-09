@@ -9,7 +9,15 @@ mat-sidenav-container {
     width: 650px;
 
     mat-toolbar{
-        background: #3f51b5;
+        background:none;
+
+        .mat-raised-button{
+            margin-left: 15px
+        }
+    }
+
+    .formulario{
+        margin: 0 30px
     }
   }
 
@@ -17,6 +25,10 @@ mat-sidenav-container {
     mat-card {
       table {
         width: 100%;
+
+        .mat-column-options{
+            text-align: right;
+        }
       }
       margin: 50px;
     }

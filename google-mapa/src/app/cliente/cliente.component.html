@@ -11,8 +11,35 @@
         </mat-toolbar>
 
         <div class="formulario">
-            
+
+            <mat-form-field>
+                <input matInput placeholder="Código">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Nome">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="E-mail">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Cidade</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let cidade of cidades">
+                        {{cidade.nome}} - {{cidade.estado.sigla}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
         </div>
+
+        <mat-toolbar>
+            <span class="flex-spacer"></span>
+            <button mat-button>Cancelar</button>
+            <button mat-raised-button color="primary">Confirmar</button>
+        </mat-toolbar>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-card>
@@ -56,6 +83,25 @@
                             {{cliente.cidade.estado.sigla}}</td>
                     </ng-container>
 
+                    <!-- options Column -->
+                    <ng-container matColumnDef="options">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let cliente">
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Excluir</span>
+                                </button>
+                                <button mat-menu-item>
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Editar</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
