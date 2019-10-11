@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClienteService, ClienteEntity } from '../_services/cliente.service';
 import { CidadeService, CidadeEntity } from '../_services/cidade.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cliente',
@@ -9,15 +11,26 @@ import { CidadeService, CidadeEntity } from '../_services/cidade.service';
 })
 export class ClienteComponent implements OnInit {
 
+  @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
+
   public displayedColumns: string[] = ['codigo', 'nome', 'email', 'cidade', 'options'];
 
   public clientes: ClienteEntity[] = [];
-  public cidades:  CidadeEntity[] = [];
+  public cidades: CidadeEntity[] = [];
+
+  public cliente: ClienteEntity = new ClienteEntity;
+
+  public msgerror: string;
+  public loading: boolean;
 
 
-  constructor(private service: ClienteService, private cidadeService: CidadeService) { }
+  constructor(private service: ClienteService, private cidadeService: CidadeService, 
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+
+    this.msgerror = '';
+    this.loading = true;
 
     this.service.find().subscribe(result => {
 
@@ -26,16 +39,45 @@ export class ClienteComponent implements OnInit {
       this.cidadeService.find().subscribe(result => {
 
         this.cidades = result;
-      
       }, error => {
-        console.error('Pau', error);
+        this.msgerror = error.message;
       });
-    
+
     }, error => {
-      console.error('Pau', error);
+      this.msgerror = error.message;
+    }).add(() => {
+      this.loading = false;
     });
 
   }
+  private openSidebar(cliente: ClienteEntity) {
+    this.cliente = cliente;
+    this.sidenav.open();
+  }
+  public add() {
+    this.openSidebar(new ClienteEntity());
+  }
+  public editar(cliente: ClienteEntity) {
+    this.openSidebar(cliente);
+  }
 
+  public confirmar(){
+    this.loading = true;
+    this.service.save(this.cliente).subscribe(result =>{
+      this.snackBar.open('Registro salvo com sucesso!', '', {
+        duration: 3000
+      })
+    }, error =>{
+      this.msgerror = error.message;
+    }).add(() =>{
+
+      this.sidenav.close();
+      this.loading = false;
+    });
+  }
+
+  public compareOptions(id1, id2) {
+    return id1 && id2 && id1.id === id2.id;
+  }
 
 }

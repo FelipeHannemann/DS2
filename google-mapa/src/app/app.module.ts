@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -17,6 +18,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +27,7 @@ import {MatMenuModule} from '@angular/material/menu';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -37,7 +41,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressBarModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
