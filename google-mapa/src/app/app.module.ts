@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { ConfirmDialogComponent } from './c_components/confirm-dialog/confirm-dialog.component';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,10 +21,13 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent
+    ClienteComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +47,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatSelectModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [],
+  entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
