@@ -1,25 +1,22 @@
-import { Router } from 'express';
-import  clienteController  from '../controller/cliente.controller';
+import { Router } from "express";
+import  ClienteController  from '../controller/cliente.controller';
 
-class CidadeRouter {
-
+class CidadeRouter{
     public router: Router;
 
     constructor() {
         this.router = Router();
-
         this.init();
     }
+    private init(){
+        this.router.get('/', ClienteController.find);
+        this.router.post('/', ClienteController.create);
+        this.router.get('/:id([0-9]+)', ClienteController.findById);
+        this.router.put('/:id([0-9]+)', ClienteController.update);
+        this.router.delete('/:id([0-9]+)', ClienteController.delete);
+        
 
-    private init() {
-        this.router.get('/', clienteController.find);
-        this.router.post('/', clienteController.create);
-
-        this.router.get('/:id([0-9]+)', clienteController.findById);
-        this.router.put('/:id([0-9]+)', clienteController.update);
-        this.router.delete('/:id([0-9]+)', clienteController.delete);
     }
-
 }
 
 export default new CidadeRouter().router;

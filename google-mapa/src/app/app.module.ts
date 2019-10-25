@@ -1,17 +1,18 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { ConfirmDialogComponent } from './c_components/confirm-dialog/confirm-dialog.component';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClienteComponent } from './cliente/cliente.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { FormsModule } from '@angular/forms';
-import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
-import { MatSidenavModule } from '@angular/material/sidenav';
+
+import {MatListModule} from '@angular/material/list';
+import {MatTableModule} from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
+import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -21,13 +22,25 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CidadeComponent } from './cidade/cidade.component';
+
+
+import { AgmCoreModule } from '@agm/core';
+import { MapaComponent } from './mapa/mapa.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ClienteComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    CidadeComponent,
+    MapaComponent
+  
+    
   ],
   imports: [
     BrowserModule,
@@ -48,10 +61,13 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatMenuModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDy6kfY-rVOtJhHStLoPWVYfpAMzcIMJlE'
+    })
   ],
   providers: [],
-  entryComponents: [ConfirmDialogComponent],
+  entryComponents:[ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

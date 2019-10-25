@@ -1,25 +1,21 @@
-import { Router } from 'express';
-import  cidadeController   from '../controller/cidade.controller';
+import { Router } from "express";
+import  CidadeController  from '../controller/cidade.controller';
 
-class CidadeRouter {
-
+class CidadeRouter{
     public router: Router;
 
     constructor() {
         this.router = Router();
-
         this.init();
     }
+    private init(){
+        this.router.get('/', CidadeController.find);
+        this.router.post('/', CidadeController.create);
+        this.router.get('/:id([0-9]+)', CidadeController.findById);
+        this.router.put('/:id([0-9]+)', CidadeController.update);
+        this.router.delete('/:id([0-9]+)', CidadeController.delete);
 
-    private init() {
-        this.router.get('/', cidadeController.find);
-        this.router.post('/', cidadeController.create);
-
-        this.router.get('/:id([0-9]+)', cidadeController.findById);
-        this.router.put('/:id([0-9]+)', cidadeController.update);
-        this.router.delete('/:id([0-9]+)', cidadeController.delete);
     }
-
 }
 
 export default new CidadeRouter().router;

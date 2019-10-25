@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
 	<mat-sidenav #sidenav position="end" mode="over" disableClose="true">
 		<mat-toolbar>
-			<h2>Adicionar Cliente</h2>
+			<h2>Adicionar Cidade</h2>
 			<span class="flex-spacer"></span>
 			<button mat-icon-button (click)="sidenav.close()">
 				<mat-icon>close</mat-icon>
@@ -9,26 +9,26 @@
 		</mat-toolbar>
 
 		<div class="formulario">
-
-			<mat-form-field>
-				<input matInput placeholder="Código" [(ngModel)]="cliente.codigo" >
+			
+			<mat-form-field class="full-width">
+				<input matInput placeholder="Nome" [(ngModel)]="cidade.nome">
 			</mat-form-field>
 
 			<mat-form-field class="full-width">
-				<input matInput placeholder="Nome" [(ngModel)]="cliente.nome">
-			</mat-form-field>
-
-			<mat-form-field class="full-width">
-				<input matInput placeholder="E-mail" [(ngModel)]="cliente.email">
-			</mat-form-field>
-
-			<mat-form-field class="full-width">
-				<mat-select placeholder="Cidade" [(value)]="cliente.cidade"
+				<mat-select placeholder="Estado" [(value)]="cidade.estado"
 				            [compareWith]="compareOptions">
-					<mat-option *ngFor="let cidade of cidades" [value]="cidade">
-						{{ cidade.estado.sigla }} - {{ cidade.nome }}
+					<mat-option *ngFor="let estado of estados" [value]="estado">
+						{{ estado.sigla }} - {{ estado.nome }}
 					</mat-option>
 				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field class="full-width">
+				<input matInput placeholder="Latitude" [(ngModel)]="cidade.lat">
+			</mat-form-field>
+
+			<mat-form-field class="full-width">
+				<input matInput placeholder="Longitude" [(ngModel)]="cidade.lng">
 			</mat-form-field>
 
 		</div>
@@ -45,7 +45,7 @@
 		<mat-card>
 			<mat-card-title>
 				<mat-toolbar color="primary">
-					<h3>Cadastro de Clientes</h3>
+					<h3>Cadastro de Cidades</h3>
 					<span class="flex-spacer"></span>
 					<button mat-icon-button (click)="add()">
 						<mat-icon>add</mat-icon>
@@ -55,46 +55,45 @@
 			</mat-card-title>
 
 			<mat-card-content>
-				<table mat-table [dataSource]="clientes" *ngIf="!msgerror">
-
-					<!-- Código Column -->
-					<ng-container matColumnDef="codigo">
-						<th mat-header-cell *matHeaderCellDef> Código </th>
-						<td mat-cell *matCellDef="let cliente"> {{cliente.codigo}} </td>
-					</ng-container>
-
+				<table mat-table [dataSource]="cidades" *ngIf="!msgerror">
 					<!-- Nome Column -->
 					<ng-container matColumnDef="nome">
-						<th mat-header-cell *matHeaderCellDef> Nome Completo </th>
-						<td mat-cell *matCellDef="let cliente"> {{cliente.nome}} </td>
+						<th mat-header-cell *matHeaderCellDef> Nome  </th>
+						<td mat-cell *matCellDef="let cidade"> {{cidade.nome}} </td>
 					</ng-container>
 
-					<!-- E-mail Column -->
-					<ng-container matColumnDef="email">
-						<th mat-header-cell *matHeaderCellDef> E-mail </th>
-						<td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
+					<!-- Estado Column -->
+					<ng-container matColumnDef="estado">
+						<th mat-header-cell *matHeaderCellDef> Estado </th>
+						<td mat-cell *matCellDef="let cidade"> {{cidade.estado.nome}} /
+							 {{cidade.estado.sigla}} </td>
 					</ng-container>
 
-					<!-- Cidade Column -->
-					<ng-container matColumnDef="cidade">
-						<th mat-header-cell *matHeaderCellDef> Cidade/UF </th>
-						<td mat-cell *matCellDef="let cliente"> {{cliente.cidade.nome}} /
-							{{cliente.cidade.estado.sigla}} </td>
+					<!-- Latitude Column -->
+					<ng-container matColumnDef="Latitude">
+						<th mat-header-cell *matHeaderCellDef> Latitude </th>
+						<td mat-cell *matCellDef="let cidade"> {{cidade.lat}} </td>
+					</ng-container>
+
+					<!-- Longitude Column -->
+					<ng-container matColumnDef="Longitude">
+						<th mat-header-cell *matHeaderCellDef> Longitude </th>
+						<td mat-cell *matCellDef="let cidade"> {{cidade.lng}} </td>
 					</ng-container>
 
 					<!-- Options Column -->
 					<ng-container matColumnDef="options">
 						<th mat-header-cell *matHeaderCellDef> </th>
-						<td mat-cell *matCellDef="let cliente">
+						<td mat-cell *matCellDef="let cidade">
 							<button mat-icon-button [matMenuTriggerFor]="menu">
 								<mat-icon>more_vert</mat-icon>
 							</button>
 							<mat-menu #menu="matMenu">
-								<button mat-menu-item (click)="excluir(cliente)">
+								<button mat-menu-item (click)="excluir(cidade)">
 									<mat-icon>delete</mat-icon>
 									<span>Excluir</span>
 								</button>
-								<button mat-menu-item (click)="editar(cliente)">
+								<button mat-menu-item (click)="editar(cidade)">
 									<mat-icon>edit</mat-icon>
 									<span>Editar</span>
 								</button>
