@@ -1,81 +1,70 @@
 const connection = require('../mysql-connection');
+const util = require('util');
 
-const query = 'SELECT P.ID AS ID_PED, P.CODIGO AS CODIGO_PED, P.DTPEDIDO AS DATA_PED, ' +
-    'P.OBSERVACAO AS OBSERVACAO_PED, C.ID AS ID_CLIENTE, C.CODIGO AS CODIGO_CLI, ' +
-    'C.NOME AS NOME_CLI, C.EMAIL AS EMAIL_CLI, V.ID AS ID_VENDEDOR, V.CODIGO AS CODIGO_VENDEDOR, ' +
-    'V.NOME AS NOME_VENDEDOR, C.EMAIL AS EMAIL_VENDEDOR ' +
-    'FROM PEDIDO P ' +
-    'JOIN CLIENTE C ON P.CLIENTE_ID = C.ID ' +
-    'JOIN VENDEDOR V ON P.VENDEDOR_ID = V.ID ';
+const query = 'SELECT p.id as p_id, p.codigo as p_codigo, p.dtpedido, '+
+                     'p.observacao, c.id as c_id, c.codigo as c_codigo, '+
+                     'c.nome as c_nome, c.email as c_email, v.id as v_id, '+
+                     'v.codigo as v_codigo, v.nome as v_nome, v.email as v_email '+
+              'FROM pedido p '+
+              'INNER JOIN cliente c ON c.id = p.cliente_id '+
+              'INNER JOIN vendedor v ON v.id = p.vendedor_id ';
+
+const queryItens = 'SELECT ip.id as ip_id, ip.qtdade, ip.vlrunit, '+
+                   'p.id as p_id, p.codigo, p.nome, p.descricao, p.preco '+
+                   'FROM itempedido ip '+
+                   'INNER JOIN produto p ON p.id = ip.produto_id '+
+                   'WHERE ip.pedido_id = ?';
+
+const queryAsync = util.promisify(connection.query).bind(connection);
 
 module.exports = {
-
     find: (callback) => {
-        connection.query(query, (error, resultPedido) => {
+        (async() => {
+            try {
 
-            if (error) {
+                let pedidos = await queryAsync(query);
+
+                for (pedido of pedidos) {
+                    pedido.itens = [];
+                    
+                    //Busca os itens do pedido
+                    let itens = await queryAsync(queryItens, [pedido.p_id]);
+
+                    for (item of itens) {
+                        let itempedido = {
+                            id: item.ip_id,
+                            qtdade: item.qtdade,
+                            vlrunit: item.vlrunit,
+                            produto: {
+                                id: item.p_id,
+                                codigo: item.codigo,
+                                nome: item.nome,
+                                descricao: item.descricao,                        
+                                preco: item.preco
+                            }
+                        }
+    
+                        pedido.itens.push( itempedido );
+                    }
+                }
+                
+                callback(false, pedidos);
+
+            } catch(error) {
                 callback(error, false);
                 return;
             }
-
-            const idPedido = resultPedido[0].ID_PED;
-
-            const queryItens = 'SELECT ip.id as ip_id, ip.quantidade, ip.vlrunit, ' +
-                'p.id as p_id, p.codigo, p.nome, p.descricao, p.preco ' +
-                'FROM itempedido ip ' +
-                'INNER JOIN produto p ON p.id = ip.produto_id ' +
-                'WHERE ip.pedido_id = ' + idPedido;
-
-            connection.query(queryItens, (error, resultItens) => {
-                if (error) {
-                    callback(error, false);
-                    return;
-                }
-
-                const itens = [];
-
-                for (item of resultItens) {
-
-                    let itempedido = {
-                        id: item.ip_id,
-                        qtdade: item.qtdade,
-                        vlrunit: item.vlrunit,
-                        produto: {
-                            id: item.p_id,
-                            codigo: item.codigo,
-                            nome: item.nome,
-                            descricao: item.descricao,
-                            preco: item.preco
-                        }
-                    }
-
-                    itens.push(itempedido);
-
-                }
-
-                resultPedido[0].itens = itens;
-
-                callback(error, resultPedido);
-            });
-        });
+        })();
     },
-
     findById: (params, callback) => {
-
-        const idPedido = params.id;
-        connection.query(query + ' WHERE P.ID =' + idPedido, (error, resultPedido) => {
+        connection.query(query +' WHERE p.id = ?',[params.id], (error, resultPedido) => {
 
             if (error) {
                 callback(error, false);
                 return;
             }
-            const queryItens = 'SELECT ip.id as ip_id, ip.quantidade, ip.vlrunit, ' +
-                'p.id as p_id, p.codigo, p.nome, p.descricao, p.preco ' +
-                'FROM itempedido ip ' +
-                'INNER JOIN produto p ON p.id = ip.produto_id ' +
-                'WHERE ip.pedido_id = ' + idPedido;
 
-            connection.query(queryItens, (error, resultItens) => {
+            connection.query(queryItens, [resultPedido[0].p_id], (error, resultItens) => {
                 if (error) {
                     callback(error, false);
                     return;
@@ -93,12 +82,12 @@ module.exports = {
                             id: item.p_id,
                             codigo: item.codigo,
                             nome: item.nome,
-                            descricao: item.descricao,
+                            descricao: item.descricao,                        
                             preco: item.preco
                         }
                     }
 
-                    itens.push(itempedido);
+                    itens.push( itempedido );
 
                 }
 
@@ -108,48 +97,72 @@ module.exports = {
             });
         });
     },
-
-    create: (params) => {
+    create: (params, callback) => {
         connection.beginTransaction(error => {
             if (error) {
                 callback(error, false);
-                return
-            };
-            //Insere o cabeçalho do pedido   
-            connection.query('INSERT INTO pedido (CODIGO,DTPEDIDO,OBSERVACAO, VENDEDOR_ID, CLIENTE_ID) VALUES(?,?,?,?,?)',
-                [params.codigo, params.dtPedido, params.observacao, params.vendedor.id, params.cliente.id], (error, cabecResult) => {
-                    // Faz roolback, se error no cabecalho
+                return;
+            }
+
+            //Insere o cabeçalho do pedido
+            connection.query('INSERT INTO pedido (codigo, dtpedido, observacao, cliente_id, vendedor_id) VALUES (?,?,?,?,?)', 
+                            [params.codigo, params.dtpedido, params.observacao, params.cliente.id, params.vendedor.id], (error, cabecResult) => {
+                //Faz roolback, se error no cabeçalho
+                if (error) {
+                    connection.rollback(() => {
+                        callback(error, false);
+                        return;
+                    })
+                }
+
+                const pedidoID = cabecResult.insertId;
+
+                //Monta query de inserção de itens
+                let qrInsertItens = 'INSERT INTO itempedido (pedido_id, produto_id, qtdade, vlrunit) VALUES ';
+
+                //Monta valores do INSERT com TODOS os itens do pedido
+                let queryAux = '';
+                for (item of params.itens) {
+
+                    queryAux += queryAux == '' ? '' : ',';
+                    queryAux += '('+ pedidoID +', '+ item.produto.id +', '+ item.qtdade +', '+ item.vlrunit +')'
+
+                }
+
+                qrInsertItens += queryAux;
+
+                //Executa a query de inclusão de itens em massa
+                connection.query( qrInsertItens, (error, itensResult) => {
+                    //Faz roolback, se error nos itens
                     if (error) {
-                        connection.rollback(() =>{
+                        connection.rollback(() => {
                             callback(error, false);
                             return;
                         })
-                    };
+                    }  
 
-                    const pedidoId = cabecResult.id;
-                    //Monta query de insercao de itens
-                    let queryAux = '';
-                    let qrInsertItens = 'INSERT INTO 
-                    ITEMPEDIDO (QUANTIDADE,VLRUNIT,PRODUTO_ID, PEDIDO_ID) VALUES';
-                    //Insere os Itens do Pedido
-                    for (item of params.itens) {
-                        
-                        queryAux += queryAux == '' ? '' : ',';
-                        queryAux += "("+ pedidoId +","+ item.produto.id +", "+ item.qtdade + ", "+ item.vlrunit + ")"
-                        
-                    }
-                    qrInsertItens += queryAux; 
-                    callback(false, qrInsertItens);
+                    //Tenta commitar a transação
+                    connection.commit((error) => {
+                        //Caso ocorra algum erro, dá roolback
+                        connection.rollback(() => {
+                            callback(error, false);
+                            return;
+                        });
+
+                        params.id = pedidoID;
+
+                        callback(false, params);
+                    });
                 });
+            });
         });
     },
-
     update: (params, callback) => {
-        connection.query('UPDATE pedido SET CODIGO = ?, DTPEDIDO = ?, OBSERVACAO = ?, VENDEDOR_ID = ?, CLIENTE_ID = ? WHERE id = ?',
-            [params.codigo, params.dtPedido, params.observacao, params.vendedor_id, params.cliente_id, params.id], callback);
-
+        connection.query('UPDATE pedido SET codigo = ?, dtpedido = ?, observacao = ?, cliente_id = ?, vendedor_id = ? WHERE id = ?', 
+                         [params.codigo, params.dtpedido, params.observacao, params.cliente.id, params.vendedor.id, params.id], callback);
+        
     },
     delete: (params, callback) => {
-        connection.query('DELETE  FROM pedido WHERE ID = ?', [params.id], callback);
+        connection.query('DELETE FROM pedido WHERE id = ?', [params.id], callback);
     }
-};
+}
