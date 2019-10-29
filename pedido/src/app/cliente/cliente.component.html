@@ -26,7 +26,7 @@
             <mat-form-field class="full-width">
                 <mat-select placeholder="Cidade" [(value)]="cliente.cidade" [compareWith]="compareOptions">
                     <mat-option *ngFor="let cidade of cidades" [value]="cidade">
-                        {{ cidade.nome }}
+                        {{ cliente.cidade.nome }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -78,7 +78,7 @@
                     <!-- Cidade Column -->
                     <ng-container matColumnDef="cidade">
                         <th mat-header-cell *matHeaderCellDef> Cidade </th>
-                        <td mat-cell *matCellDef="let cidade"> {{cliente.cidade}} </td>
+                        <td mat-cell *matCellDef="let cliente"> {{cliente.cidade.nome}} </td>
                     </ng-container>
 
                     <!-- Options Column -->
