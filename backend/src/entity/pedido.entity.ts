@@ -26,7 +26,7 @@ export class PedidoEntity {
     @JoinColumn({ name: 'vendedor_id' })
     vendedor: VendedorEntity;
 
-    @OneToMany(type => itemPedidoEntity, item => item.pedido) 
+    @OneToMany(type => itemPedidoEntity, item => item.pedido, {eager: true}) 
     itens: itemPedidoEntity[];
 
 }
