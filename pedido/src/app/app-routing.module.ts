@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'cidade', component: CidadeComponent},
   { path: 'estado', component: EstadoComponent},
   { path: 'pedido', component: PedidoComponent},
-  { path: 'produto', component: ProdutoComponent},
-  { path: 'tabelapreco', component: TabelaprecoComponent},
+  { path: 'produtos', component: ProdutoComponent},
+  { path: 'tabelaprecos', component: TabelaprecoComponent},
   { path: 'vendedor', component: VendedorComponent},
 ];
 
