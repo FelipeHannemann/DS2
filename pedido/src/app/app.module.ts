@@ -1,20 +1,21 @@
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EstadoComponent } from './estado/estado.component';
 import { ClienteComponent } from './cliente/cliente.component';
-import { PedidoComponent } from './pedido/pedido.component';
+import { CidadeComponent } from './cidade/cidade.component';
 import { ProdutoComponent } from './produto/produto.component';
+import { PedidoComponent } from './pedido/pedido.component';
 import { TabelaprecoComponent } from './tabelapreco/tabelapreco.component';
 import { VendedorComponent } from './vendedor/vendedor.component';
-import { CidadeComponent } from './cidade/cidade.component';
 
 
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
@@ -30,6 +31,13 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dialog.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
+import { TotalPedidoPipe } from './_pipes/total-pedido.pipe';
+import { ItempedidoDialogComponent } from './_components/itempedido-dialog/itempedido-dialog.component';
+import {MatCheckboxModule} from '@angular/material/CheckBox';
+import {MatBadgeModule} from '@angular/material/badge';
+
 
 
 @NgModule({
@@ -37,14 +45,19 @@ import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dia
     AppComponent,
     EstadoComponent,
     ClienteComponent,
-    PedidoComponent,
+    CidadeComponent,
     ProdutoComponent,
+    PedidoComponent,
     TabelaprecoComponent,
     VendedorComponent,
-    CidadeComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    TotalPedidoPipe,
+    ItempedidoDialogComponent,
   ],
   imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     AppRoutingModule,
@@ -64,9 +77,15 @@ import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dia
     MatProgressBarModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    MatBadgeModule
   ],
   providers: [],
-  entryComponents:[ConfirmDialogComponent],
+  entryComponents:[ConfirmDialogComponent, 
+  ItempedidoDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

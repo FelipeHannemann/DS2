@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'produtos', component: ProdutoComponent},
   { path: 'tabelaprecos', component: TabelaprecoComponent},
   { path: 'vendedor', component: VendedorComponent},
+  { path: '**', redirectTo: 'pedido'},
 ];
 
 @NgModule({
