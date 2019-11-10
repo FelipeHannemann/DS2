@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav position="end" mode="over" disableClose="true">
         <mat-toolbar>
-            <h2>Adicionar Voluntários</h2>
+            <h2>Adicionar Psicologos</h2>
             <span class="flex-spacer"></span>
             <button mat-icon-button (click)="sidenav.close()">
                 <mat-icon>close</mat-icon>
@@ -11,30 +11,20 @@
         <div class="formulario">
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Nome" [(ngModel)]="voluntario.nome">
+                <input matInput placeholder="Nome" [(ngModel)]="psicologo.nome">
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Apelido" [(ngModel)]="voluntario.apelido">
+                <input matInput placeholder="CRP" [(ngModel)]="psicologo.crp">
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Cpf" [(ngModel)]="voluntario.cpf">
+                <input matInput placeholder="Nome da Clinica" [(ngModel)]="psicologo.nomeclinica">
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Email" [(ngModel)]="voluntario.email">
+                <input matInput placeholder="Email" [(ngModel)]="psicologo.email">
             </mat-form-field>
-
-
-            <mat-form-field class="full-width">
-                <mat-select placeholder="Cidade" [(value)]="voluntario.cidade" [compareWith]="compareOptions">
-                    <mat-option *ngFor="let cidade of cidades" [value]="cidade">
-                        {{ cidade.nome }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
         </div>
 
         <mat-toolbar>
@@ -49,7 +39,7 @@
         <mat-card>
             <mat-card-title>
                 <mat-toolbar color="primary">
-                    <h3>Cadastro de Voluntários</h3>
+                    <h3>Cadastro de Psicologos</h3>
                     <span class="flex-spacer"></span>
                     <button mat-icon-button (click)="add()">
                         <mat-icon>add</mat-icon>
@@ -59,48 +49,41 @@
             </mat-card-title>
 
             <mat-card-content>
-                <table mat-table [dataSource]="voluntarios" *ngIf="!msgerror">
-
+                <table mat-table [dataSource]="psicologos" *ngIf="!msgerror">
                     <!-- Nome Column -->
                     <ng-container matColumnDef="nome">
                         <th mat-header-cell *matHeaderCellDef> Nome </th>
-                        <td mat-cell *matCellDef="let voluntario"> {{voluntario.nome}} </td>
+                        <td mat-cell *matCellDef="let psicologo"> {{psicologo.nome}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="apelido">
-                        <th mat-header-cell *matHeaderCellDef> Apelido </th>
-                        <td mat-cell *matCellDef="let voluntario"> {{voluntario.apelido}} </td>
+                    <ng-container matColumnDef="crp">
+                        <th mat-header-cell *matHeaderCellDef> Crp </th>
+                        <td mat-cell *matCellDef="let psicologo"> {{psicologo.crp}} </td>
                     </ng-container>
-                    
-                    <ng-container matColumnDef="cpf">
-                        <th mat-header-cell *matHeaderCellDef> Cpf </th>
-                        <td mat-cell *matCellDef="let voluntario"> {{voluntario.cpf}} </td>
+
+                    <ng-container matColumnDef="nomeclinica">
+                        <th mat-header-cell *matHeaderCellDef> Nome da Clinica </th>
+                        <td mat-cell *matCellDef="let psicologo"> {{psicologo.nomeclinica}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef> Email </th>
-                        <td mat-cell *matCellDef="let voluntario"> {{voluntario.email}} </td>
-                    </ng-container>
-
-                    <!-- Cidade Column -->
-                    <ng-container matColumnDef="cidade">
-                        <th mat-header-cell *matHeaderCellDef> Cidade </th>
-                        <td mat-cell *matCellDef="let voluntario"> {{voluntario.cidade.nome}} </td>
+                        <td mat-cell *matCellDef="let psicologo"> {{psicologo.email}} </td>
                     </ng-container>
 
                     <!-- Options Column -->
                     <ng-container matColumnDef="options">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let voluntario">
+                        <td mat-cell *matCellDef="let psicologo">
                             <button mat-icon-button [matMenuTriggerFor]="menu">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="excluir(voluntario)">
+                                <button mat-menu-item (click)="excluir(psicologo)">
                                     <mat-icon>delete</mat-icon>
                                     <span>Excluir</span>
                                 </button>
-                                <button mat-menu-item (click)="editar(voluntario)">
+                                <button mat-menu-item (click)="editar(psicologo)">
                                     <mat-icon>edit</mat-icon>
                                     <span>Editar</span>
                                 </button>

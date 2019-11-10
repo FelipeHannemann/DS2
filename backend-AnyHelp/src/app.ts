@@ -4,6 +4,7 @@ import * as cors       from 'cors';
 import estadoRouter from './router/estado.router';
 import cidadeRouter from './router/cidade.router';
 import voluntarioRouter from './router/voluntario.router';
+import psicologoRouter from './router/psicologo.router';
 
 class App{
     public express: express.Application;
@@ -23,6 +24,7 @@ class App{
         this.express.use('/estados', estadoRouter);
         this.express.use('/cidades', cidadeRouter);
         this.express.use('/voluntarios', voluntarioRouter);
+        this.express.use('/psicologos', psicologoRouter);
     }
 }
 

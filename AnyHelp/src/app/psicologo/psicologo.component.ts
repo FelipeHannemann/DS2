@@ -1,33 +1,30 @@
-import { VoluntarioEntity, VoluntarioService } from '../_services/voluntario.service';
-import { CidadeService, CidadeEntity } from './../_services/cidade.service';
+import { PsicologoEntity, PsicologoService } from '../_services/psicologo.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confirm-dialog/confirm-dialog.component';
 
-
 @Component({
-  selector: 'app-voluntario',
-  templateUrl: './voluntario.component.html',
-  styleUrls: ['./voluntario.component.scss']
+  selector: 'app-psicologo',
+  templateUrl: './psicologo.component.html',
+  styleUrls: ['./psicologo.component.scss']
 })
-export class VoluntarioComponent implements OnInit {
+export class PsicologoComponent implements OnInit {
 
   @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
-  public displayedColumns: string[] = [ 'nome', 'apelido', 'cpf', 'email' ,'cidade', 'options' ];
+  public displayedColumns: string[] = ['nome', 'crp', 'nomeclinica', 'email', 'options' ];
 
-  public voluntarios: VoluntarioEntity[] = [];
-  public cidades: CidadeEntity[] = [];
+  public psicologos: PsicologoEntity[] = [];
 
 
-  public voluntario: VoluntarioEntity = new VoluntarioEntity();
+  public psicologo: PsicologoEntity = new PsicologoEntity();
 
   public msgerror: string;
   public loading: boolean;
 
-  constructor(private service: VoluntarioService, private cidadeService: CidadeService,
+  constructor(private service: PsicologoService,
     private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -39,34 +36,23 @@ export class VoluntarioComponent implements OnInit {
     
     this.service.find().subscribe(result => {
 
-      this.voluntarios = result;
-
-      this.cidadeService.find().subscribe(result => {
-
-        this.cidades = result;
-
-        this.loading = false;
-
-      }, error => {
-        this.msgerror = error.message;
-      });
-
+      this.psicologos = result;
     }, error => {
       this.msgerror = error.message;
     }).add(() => this.loading = false);
   }
-  private openSidebar(voluntario: VoluntarioEntity) {
-    this.voluntario = voluntario;
+  private openSidebar(psicologo: PsicologoEntity) {
+    this.psicologo = psicologo;
 
     this.sidenav.open();
   }
   public add() {
-    this.openSidebar(new VoluntarioEntity());
+    this.openSidebar(new PsicologoEntity());
   }
-  public editar(voluntario: VoluntarioEntity) {
-    this.openSidebar(voluntario);
+  public editar(psicologo: PsicologoEntity) {
+    this.openSidebar(psicologo);
   }
-  public excluir(voluntario: VoluntarioEntity): void {
+  public excluir(psicologo: PsicologoEntity): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: new ConfirmDialogModel('Excluir Registro', 'Deseja realmente excluir o registro?')
@@ -74,8 +60,8 @@ export class VoluntarioComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = false;
-        this.service.delete(voluntario.id).subscribe(result => {
-          this.snackBar.open('Registro excluido com sucesso!', '', {
+        this.service.delete(psicologo.id).subscribe(result => {
+          this.snackBar.open('Registro salvo com sucesso!', '', {
             duration: 3000
           });
         }, error => {
@@ -89,7 +75,7 @@ export class VoluntarioComponent implements OnInit {
   public confirmar() {
     this.loading = true;
 
-    this.service.save(this.voluntario).subscribe(result => {
+    this.service.save(this.psicologo).subscribe(result => {
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });

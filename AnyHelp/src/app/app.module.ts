@@ -26,13 +26,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dialog.component';
 import { CidadeComponent } from './cidade/cidade.component';
 import { VoluntarioComponent } from './voluntario/voluntario.component';
+import { PsicologoComponent } from './psicologo/psicologo.component';
 @NgModule({
   declarations: [
     AppComponent,
     EstadoComponent,
     ConfirmDialogComponent,
     CidadeComponent,
-    VoluntarioComponent
+    VoluntarioComponent,
+    PsicologoComponent
   ],
   imports: [
     BrowserModule,
