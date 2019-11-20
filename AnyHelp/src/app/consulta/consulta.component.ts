@@ -1,33 +1,35 @@
-import { EstadoEntity, EstadoService } from '../_services/estado.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confirm-dialog/confirm-dialog.component';
-import { MatTableDataSource } from '@angular/material/table';
+import { ConsultaEntity, ConsultaService } from '../_services/consulta.service';
+import { VoluntarioEntity, VoluntarioService } from '../_services/voluntario.service';
+import { PsicologoEntity, PsicologoService } from '../_services/psicologo.service';
 
 @Component({
-  selector: 'app-estado',
-  templateUrl: './estado.component.html',
-  styleUrls: ['./estado.component.scss']
+  selector: 'app-consulta',
+  templateUrl: './consulta.component.html',
+  styleUrls: ['./consulta.component.scss']
 })
-export class EstadoComponent implements OnInit {
+export class ConsultaComponent implements OnInit {
 
   @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
-  public displayedColumns: string[] = ['nome', 'sigla', 'options' ];
+  public displayedColumns: string[] = [ 'nome', 'voluntario', 'psicologo', 'options' ];
 
-  public dataSource = new MatTableDataSource<EstadoEntity>();
+  public consultas: ConsultaEntity[] = [];
+  public voluntarios: VoluntarioEntity[] = [];
+  public psicologos: PsicologoEntity[] = [];
 
-  public estados: EstadoEntity[] = [];
 
-
-  public estado: EstadoEntity = new EstadoEntity();
+  public consulta: ConsultaEntity = new ConsultaEntity();
 
   public msgerror: string;
   public loading: boolean;
 
-  constructor(private service: EstadoService,
+  constructor(private service: ConsultaService, private voluntarioService: VoluntarioService,
+    private psicologoService: PsicologoService,
     private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -39,24 +41,45 @@ export class EstadoComponent implements OnInit {
     
     this.service.find().subscribe(result => {
 
-      this.estados = result;
-      this.dataSource.data = this.estados;
+      this.consultas = result;
+
+      this.voluntarioService.find().subscribe(result => {
+
+        this.voluntarios = result;
+
+        this.loading = false;
+
+      }, error => {
+        this.msgerror = error.message;
+      });
+
+      
+      this.psicologoService.find().subscribe(result => {
+
+        this.psicologos = result;
+
+        this.loading = false;
+
+      }, error => {
+        this.msgerror = error.message;
+      });
+
     }, error => {
       this.msgerror = error.message;
     }).add(() => this.loading = false);
   }
-  private openSidebar(estado: EstadoEntity) {
-    this.estado = estado;
+  private openSidebar(consulta: ConsultaEntity) {
+    this.consulta = consulta;
 
     this.sidenav.open();
   }
   public add() {
-    this.openSidebar(new EstadoEntity());
+    this.openSidebar(new ConsultaEntity());
   }
-  public editar(estado: EstadoEntity) {
-    this.openSidebar(estado);
+  public editar(consulta: ConsultaEntity) {
+    this.openSidebar(consulta);
   }
-  public excluir(estado: EstadoEntity): void {
+  public excluir(consulta: ConsultaEntity): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: new ConfirmDialogModel('Excluir Registro', 'Deseja realmente excluir o registro?')
@@ -64,7 +87,7 @@ export class EstadoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = false;
-        this.service.delete(estado.id).subscribe(result => {
+        this.service.delete(consulta.id).subscribe(result => {
           this.snackBar.open('Registro salvo com sucesso!', '', {
             duration: 3000
           });
@@ -79,9 +102,7 @@ export class EstadoComponent implements OnInit {
   public confirmar() {
     this.loading = true;
 
-    this.service.save(this.estado).subscribe(result => {
-      this.afterConfirm(result);
-
+    this.service.save(this.consulta).subscribe(result => {
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
@@ -96,11 +117,5 @@ export class EstadoComponent implements OnInit {
 
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
-  }
-
-  private afterConfirm(estado: EstadoEntity): void {
-    this.estados.push(estado);
-    this.dataSource.data = this.estados;
-    console.log('->', estado)
   }
 }

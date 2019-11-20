@@ -1,15 +1,15 @@
-import { EstadoEntity } from './../entity/estado.entity';
+import { ConsultaEntity } from './../entity/consulta.entity';
 import { Request, Response } from 'express';
 import {getRepository} from 'typeorm'
 
-class EstadoController {
+class ConsultaController {
 
     public async find(req: Request, res: Response) {
 
         try {
-            const estados = await getRepository(EstadoEntity).find();
+            const consultas = await getRepository(ConsultaEntity).find();
             
-            res.send(estados);
+            res.send(consultas);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -17,15 +17,11 @@ class EstadoController {
     }
 
     public async create(req: Request, res: Response) {
-        const estado = req.body;
+        const consulta = req.body;
 
         try {
-            await getRepository(EstadoEntity).save(estado);
-
-            //to-do: emitir sinal
-            req.io.emit('createEstado', estado);
-
-            res.send(estado);
+            await getRepository(ConsultaEntity).save(consulta);
+            res.send(consulta);
 
         } catch(error) {
             res.status(500).send(error);
@@ -37,15 +33,15 @@ class EstadoController {
 
         try {
             //Busca registro pelo ID
-            const estado = await getRepository(EstadoEntity).findOne(id);
+            const consulta = await getRepository(ConsultaEntity).findOne(id);
 
             //Se não encontrar, devolve erro 404
-            if (!estado) {
+            if (!consulta) {
                 res.status(404).send('Not found');
                 return;    
             }
             
-            res.send(estado);
+            res.send(consulta);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -58,18 +54,18 @@ class EstadoController {
 
         try {
             //Busca registro pelo ID
-            const estado = await getRepository(EstadoEntity).findOne(id);
+            const consulta = await getRepository(ConsultaEntity).findOne(id);
 
             //Se não encontrar, devolve erro 404
-            if (!estado) {
+            if (!consulta) {
                 res.status(404).send('Not found');
                 return;    
             }
 
-            await getRepository(EstadoEntity).update(estado.id, novo);
+            await getRepository(ConsultaEntity).update(consulta.id, novo);
             
             //Atualiza ID do novo
-            novo.id = estado.id;
+            novo.id = consulta.id;
 
             res.send(novo);
         } catch (error) {
@@ -83,15 +79,15 @@ class EstadoController {
 
         try {
             //Busca registro pelo ID
-            const estado = await getRepository(EstadoEntity).findOne(id);
+            const consulta = await getRepository(ConsultaEntity).findOne(id);
 
             //Se não encontrar, devolve erro 404
-            if (!estado) {
+            if (!consulta) {
                 res.status(404).send('Not found');
                 return;    
             }
 
-            await getRepository(EstadoEntity).delete(estado);
+            await getRepository(ConsultaEntity).delete(consulta);
             
             res.status(204).send();
         } catch (error) {
@@ -101,4 +97,4 @@ class EstadoController {
     }
 }
 
-export default new EstadoController();
+export default new ConsultaController();

@@ -27,6 +27,7 @@ import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dia
 import { CidadeComponent } from './cidade/cidade.component';
 import { VoluntarioComponent } from './voluntario/voluntario.component';
 import { PsicologoComponent } from './psicologo/psicologo.component';
+import { ConsultaComponent } from './consulta/consulta.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { PsicologoComponent } from './psicologo/psicologo.component';
     ConfirmDialogComponent,
     CidadeComponent,
     VoluntarioComponent,
-    PsicologoComponent
+    PsicologoComponent,
+    ConsultaComponent
   ],
   imports: [
     BrowserModule,

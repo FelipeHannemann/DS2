@@ -5,6 +5,7 @@ import estadoRouter from './router/estado.router';
 import cidadeRouter from './router/cidade.router';
 import voluntarioRouter from './router/voluntario.router';
 import psicologoRouter from './router/psicologo.router';
+import consultaRouter from './router/consulta.router';
 
 class App{
     public express: express.Application;
@@ -25,6 +26,7 @@ class App{
         this.express.use('/cidades', cidadeRouter);
         this.express.use('/voluntarios', voluntarioRouter);
         this.express.use('/psicologos', psicologoRouter);
+        this.express.use('/consultas', consultaRouter);
     }
 }
 

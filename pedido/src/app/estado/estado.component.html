@@ -15,7 +15,7 @@
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Descrição" [(ngModel)]="estado.sigla">
+                <input matInput placeholder="Sigla" [(ngModel)]="estado.sigla">
             </mat-form-field>
 
         </div>
@@ -42,7 +42,7 @@
             </mat-card-title>
 
             <mat-card-content>
-                <table mat-table [dataSource]="estados" *ngIf="!msgerror">
+                <table mat-table [dataSource]="dataSource" *ngIf="!msgerror">
                     <!-- Nome Column -->
                     <ng-container matColumnDef="nome">
                         <th mat-header-cell *matHeaderCellDef> Nome </th>
@@ -78,6 +78,8 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+
+                {{this.estados | json}}
 
                 <div class="panel-error" *ngIf="msgerror">
                     <img src="assets/oops.png">

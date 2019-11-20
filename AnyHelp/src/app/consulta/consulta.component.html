@@ -1,0 +1,111 @@
+<mat-sidenav-container class="sidenav-container">
+	<mat-sidenav #sidenav position="end" mode="over" disableClose="true">
+		<mat-toolbar>
+			<h2>Adicionar Consultas</h2>
+			<span class="flex-spacer"></span>
+			<button mat-icon-button (click)="sidenav.close()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-toolbar>
+
+		<div class="formulario">
+			
+			<mat-form-field class="full-width">
+				<input matInput placeholder="Nome" [(ngModel)]="consulta.nome">
+			</mat-form-field>
+
+			<mat-form-field class="full-width">
+				<mat-select placeholder="Voluntário" [(value)]="consulta.voluntario"
+				            [compareWith]="compareOptions">
+					<mat-option *ngFor="let voluntario of voluntarios" [value]="voluntario">
+						 {{ voluntario.nome }}
+					</mat-option>
+				</mat-select>
+            </mat-form-field>
+            
+            <mat-form-field class="full-width">
+				<mat-select placeholder="Voluntário" [(value)]="consulta.psicologo"
+				            [compareWith]="compareOptions">
+					<mat-option *ngFor="let psicologo of psicologos" [value]="psicologo">
+						 {{ psicologo.nome }} - {{psicologo.crp}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+		</div>
+
+		<mat-toolbar>
+			<span class="flex-spacer"></span>
+			<button mat-button (click)="sidenav.close()">Cancelar</button>
+			<button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
+		</mat-toolbar>
+
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+		<mat-card>
+			<mat-card-title>
+				<mat-toolbar color="primary">
+					<h3>Cadastro de Consultas</h3>
+					<span class="flex-spacer"></span>
+					<button mat-icon-button (click)="add()">
+						<mat-icon>add</mat-icon>
+					</button>
+				</mat-toolbar>
+				<mat-progress-bar mode="indeterminate" color="warn" *ngIf="loading"></mat-progress-bar>
+			</mat-card-title>
+
+			<mat-card-content>
+				<table mat-table [dataSource]="consultas" *ngIf="!msgerror">
+					<!-- Nome Column -->
+					<ng-container matColumnDef="nome">
+						<th mat-header-cell *matHeaderCellDef> Nome  </th>
+						<td mat-cell *matCellDef="let consulta"> {{consulta.nome}} </td>
+					</ng-container>
+
+	
+					<ng-container matColumnDef="voluntario">
+						<th mat-header-cell *matHeaderCellDef> Voluntários </th>
+						<td mat-cell *matCellDef="let consulta"> {{consulta.voluntario.nome}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="psicologo">
+						<th mat-header-cell *matHeaderCellDef> Psicólogos </th>
+						<td mat-cell *matCellDef="let consulta"> {{consulta.psicologo.nome}} /
+							 {{cidade.psicologo.crp}} </td>
+					</ng-container>
+
+					<!-- Options Column -->
+					<ng-container matColumnDef="options">
+						<th mat-header-cell *matHeaderCellDef> </th>
+						<td mat-cell *matCellDef="let consulta">
+							<button mat-icon-button [matMenuTriggerFor]="menu">
+								<mat-icon>more_vert</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu">
+								<button mat-menu-item (click)="excluir(consulta)">
+									<mat-icon>delete</mat-icon>
+									<span>Excluir</span>
+								</button>
+								<button mat-menu-item (click)="editar(consulta)">
+									<mat-icon>edit</mat-icon>
+									<span>Editar</span>
+								</button>
+							</mat-menu>
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+
+				<div class="panel-error" *ngIf="msgerror">
+					<img src="assets/oops.png">
+					<h1 class="mat-h1">Ocorreu um Erro</h1>
+					<p class="mat-caption">{{ msgerror }}</p>
+					<button mat-button color="warn" (click)="ngOnInit()">Tentar Novamente</button>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</mat-sidenav-content>
+</mat-sidenav-container>

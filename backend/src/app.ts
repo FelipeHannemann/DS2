@@ -15,7 +15,6 @@ class App{
     constructor(){
         this.express = express(); 
         this.middleware();
-        this.routers();
     }
     //carrega os middle da aplicacao
     private middleware(): void{
@@ -23,7 +22,13 @@ class App{
         this.express.use(cors());
     }
 
-    private routers(): void{
+    public startRouters(socketIO): void{
+        this.express.use((req, res, next) =>{
+            req.io = socketIO;
+
+            next();
+        });
+
         this.express.use('/estados', estadoRouter);
         this.express.use('/cidades', cidadeRouter);
         this.express.use('/clientes', clienteRouter); 
@@ -34,4 +39,4 @@ class App{
     }
 }
 
-export default new App().express;
+export default new App();
