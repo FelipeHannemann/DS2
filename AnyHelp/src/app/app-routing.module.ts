@@ -5,6 +5,7 @@ import { CidadeComponent } from './cidade/cidade.component';
 import { VoluntarioComponent } from './voluntario/voluntario.component';
 import { PsicologoComponent } from './psicologo/psicologo.component';
 import { ConsultaComponent } from './consulta/consulta.component';
+import { PostitComponent } from './postit/postit.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'voluntarios', component: VoluntarioComponent},
   { path: 'psicologos', component: PsicologoComponent},
   { path: 'consultas', component: ConsultaComponent},
+  { path: 'postit', component: PostitComponent},
 
 ];
 

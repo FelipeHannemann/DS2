@@ -6,6 +6,7 @@ import cidadeRouter from './router/cidade.router';
 import voluntarioRouter from './router/voluntario.router';
 import psicologoRouter from './router/psicologo.router';
 import consultaRouter from './router/consulta.router';
+import postitiRouter from './router/postiti.router';
 
 class App{
     public express: express.Application;
@@ -27,6 +28,7 @@ class App{
         this.express.use('/voluntarios', voluntarioRouter);
         this.express.use('/psicologos', psicologoRouter);
         this.express.use('/consultas', consultaRouter);
+        this.express.use('/postiti', postitiRouter);
     }
 }
 

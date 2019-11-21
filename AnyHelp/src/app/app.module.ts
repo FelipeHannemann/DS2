@@ -28,6 +28,10 @@ import { CidadeComponent } from './cidade/cidade.component';
 import { VoluntarioComponent } from './voluntario/voluntario.component';
 import { PsicologoComponent } from './psicologo/psicologo.component';
 import { ConsultaComponent } from './consulta/consulta.component';
+import { PostitComponent } from './postit/postit.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +40,8 @@ import { ConsultaComponent } from './consulta/consulta.component';
     CidadeComponent,
     VoluntarioComponent,
     PsicologoComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    PostitComponent
   ],
   imports: [
     BrowserModule,
@@ -58,8 +63,10 @@ import { ConsultaComponent } from './consulta/consulta.component';
     MatProgressBarModule,
     MatSnackBarModule,
     MatDialogModule,
+    DragDropModule
   ],
   providers: [],
+  entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

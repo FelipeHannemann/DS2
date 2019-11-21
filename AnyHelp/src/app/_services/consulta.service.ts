@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { EstadoEntity } from './estado.service';
 import { PsicologoEntity } from './psicologo.service';
 import { VoluntarioEntity } from './voluntario.service';
 
