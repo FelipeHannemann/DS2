@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confirm-dialog/confirm-dialog.component';
 import { PostitiEntity, PostitiService } from '../_services/postiti.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-postit',
@@ -15,6 +16,10 @@ export class PostitComponent implements OnInit {
   @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
   public postitis: PostitiEntity[] = [];
+
+  public dataSource = new MatTableDataSource<PostitiEntity>();
+
+  
 
 
   public postiti: PostitiEntity = new PostitiEntity();
@@ -35,6 +40,7 @@ export class PostitComponent implements OnInit {
     this.service.find().subscribe(result => {
 
       this.postitis = result;
+      this.dataSource.data = this.postitis;
     }, error => {
       this.msgerror = error.message;
     }).add(() => this.loading = false);
@@ -59,7 +65,7 @@ export class PostitComponent implements OnInit {
       if (result) {
         this.loading = false;
         this.service.delete(postiti.id).subscribe(result => {
-          this.snackBar.open('Registro salvo com sucesso!', '', {
+          this.snackBar.open('Continue...', '', {
             duration: 3000
           });
         }, error => {
@@ -74,6 +80,7 @@ export class PostitComponent implements OnInit {
     this.loading = true;
 
     this.service.save(this.postiti).subscribe(result => {
+      this.afterConfirm(result);
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
@@ -88,5 +95,10 @@ export class PostitComponent implements OnInit {
 
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
+  }
+
+  private afterConfirm(postiti: PostitiEntity): void {
+    this.postitis.push(postiti);
+    this.dataSource.data = this.postitis;
   }
 }

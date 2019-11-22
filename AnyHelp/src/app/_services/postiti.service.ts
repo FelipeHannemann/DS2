@@ -11,7 +11,7 @@ export class PostitiService {
   constructor(private http: HttpClient) { }
 
   public find(): Observable<PostitiEntity[]> {
-    return this.http.get<PostitiEntity[]>(environment.urlSaaS + '/postitis');
+    return this.http.get<PostitiEntity[]>(environment.urlSaaS + '/postiti');
   }
   public save(postiti: PostitiEntity) {
     if (postiti.id) {
@@ -21,13 +21,13 @@ export class PostitiService {
     }
   }
   public delete(id: number): Observable<PostitiEntity> {
-    return this.http.delete<PostitiEntity>(environment.urlSaaS + '/postitis/' + id); 
+    return this.http.delete<PostitiEntity>(environment.urlSaaS + '/postiti/' + id); 
   }
   private create(postiti: PostitiEntity): Observable<PostitiEntity> {
-    return this.http.post<PostitiEntity>(environment.urlSaaS + '/postitis', postiti);
+    return this.http.post<PostitiEntity>(environment.urlSaaS + '/postiti', postiti);
   }
   private update(postiti: PostitiEntity): Observable<PostitiEntity> {
-    return this.http.put<PostitiEntity>(environment.urlSaaS + '/postitis/' + postiti.id, postiti);
+    return this.http.put<PostitiEntity>(environment.urlSaaS + '/postiti/' + postiti.id, postiti);
   }
 
 }

@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'psicologos', component: PsicologoComponent},
   { path: 'consultas', component: ConsultaComponent},
   { path: 'postit', component: PostitComponent},
+  { path: '**', redirectTo: 'postit'},
 
 ];
 

@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: #fff;
+    background:  rgb(145, 195, 236);
     border-radius: 4px;
     margin-right: 25px;
     position: relative;
@@ -31,20 +31,25 @@
     box-sizing: border-box;
     padding: 10px;
     transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-                0 2px 2px 0 rgba(0, 0, 0, 0.14),
-                0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 1px -2px rgb(7, 135, 240),
+                0 2px 2px 0 rgb(7, 135, 240),
+                0 1px 5px 0 rgb(7, 135, 240);
+  mat-option{
+    background:  rgb(145, 195, 236);
+  }
   }
   
   .example-box:active {
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 5px 5px -3px rgb(50, 154, 240),
+                0 8px 10px 1px  rgb(50, 154, 240),
+                0 3px 14px 2px rgb(50, 154, 240);
+                background:  rgb(145, 195, 236);
   }
   
   .example-boundary {
     width: 10000px;
     height: 400px;
     max-width: 100%;
-    border: dotted #ccc 2px;
+    border: dotted rgb(7, 135, 240) 2px;
+    
   }
