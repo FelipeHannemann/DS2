@@ -30,6 +30,8 @@ import { PsicologoComponent } from './psicologo/psicologo.component';
 import { ConsultaComponent } from './consulta/consulta.component';
 import { PostitComponent } from './postit/postit.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatProgressBarModule,
     MatSnackBarModule,
     MatDialogModule,
-    DragDropModule
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   entryComponents: [ConfirmDialogComponent],

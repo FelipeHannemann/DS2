@@ -6,6 +6,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confi
 import { ConsultaEntity, ConsultaService } from '../_services/consulta.service';
 import { VoluntarioEntity, VoluntarioService } from '../_services/voluntario.service';
 import { PsicologoEntity, PsicologoService } from '../_services/psicologo.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-consulta',
@@ -16,7 +17,7 @@ export class ConsultaComponent implements OnInit {
 
   @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
-  public displayedColumns: string[] = [ 'nome', 'voluntario', 'psicologo', 'options' ];
+  public displayedColumns: string[] = [ 'nome', 'dtconsulta', 'psicologo', 'options' ];
 
   public consultas: ConsultaEntity[] = [];
   public voluntarios: VoluntarioEntity[] = [];
@@ -24,6 +25,8 @@ export class ConsultaComponent implements OnInit {
 
 
   public consulta: ConsultaEntity = new ConsultaEntity();
+
+  public dataSource = new MatTableDataSource<ConsultaEntity>();
 
   public msgerror: string;
   public loading: boolean;
@@ -42,7 +45,7 @@ export class ConsultaComponent implements OnInit {
     this.service.find().subscribe(result => {
 
       this.consultas = result;
-
+      this.dataSource.data = this.consultas;
       this.voluntarioService.find().subscribe(result => {
 
         this.voluntarios = result;
@@ -103,6 +106,7 @@ export class ConsultaComponent implements OnInit {
     this.loading = true;
 
     this.service.save(this.consulta).subscribe(result => {
+      this.afterConfirm(result);
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
@@ -118,4 +122,9 @@ export class ConsultaComponent implements OnInit {
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
   }
+  private afterConfirm(consulta: ConsultaEntity): void {
+    this.consultas.push(consulta);
+    this.dataSource.data = this.consultas;
+  }
 }
+

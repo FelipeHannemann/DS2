@@ -40,5 +40,6 @@ export class ConsultaEntity {
   nome: string;
   psicologo: PsicologoEntity;
   voluntario: VoluntarioEntity;
+  dtConsulta:string;
   
 }

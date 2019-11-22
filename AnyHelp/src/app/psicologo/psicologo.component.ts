@@ -4,6 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confirm-dialog/confirm-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-psicologo',
@@ -18,6 +19,7 @@ export class PsicologoComponent implements OnInit {
 
   public psicologos: PsicologoEntity[] = [];
 
+  public dataSource = new MatTableDataSource<PsicologoEntity>();
 
   public psicologo: PsicologoEntity = new PsicologoEntity();
 
@@ -37,6 +39,7 @@ export class PsicologoComponent implements OnInit {
     this.service.find().subscribe(result => {
 
       this.psicologos = result;
+      this.dataSource.data = this.psicologos;
     }, error => {
       this.msgerror = error.message;
     }).add(() => this.loading = false);
@@ -61,7 +64,7 @@ export class PsicologoComponent implements OnInit {
       if (result) {
         this.loading = false;
         this.service.delete(psicologo.id).subscribe(result => {
-          this.snackBar.open('Registro salvo com sucesso!', '', {
+          this.snackBar.open('Registro excluido com sucesso!', '', {
             duration: 3000
           });
         }, error => {
@@ -76,6 +79,7 @@ export class PsicologoComponent implements OnInit {
     this.loading = true;
 
     this.service.save(this.psicologo).subscribe(result => {
+      this.afterConfirm(result);
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
@@ -91,4 +95,9 @@ export class PsicologoComponent implements OnInit {
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
   }
+private afterConfirm(psicologo: PsicologoEntity): void {
+  this.psicologos.push(psicologo);
+  this.dataSource.data = this.psicologos;
+  console.log('->', psicologo)
+}
 }

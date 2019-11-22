@@ -1,24 +1,18 @@
-<mat-sidenav-container class="sidenav-container">
-    <div class="example-boundary">
-        <mat-option style="background:rgb(145, 195, 236);" *ngFor="let postiti of postitis" [value]="postiti"
-            class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
-            <div style="width: 100%">
-                <p>{{postiti.descricao}}</p>
-            </div>
-
-        </mat-option>
+<div class="example-boundary">
+    <div style="background:rgb(145, 195, 236);" *ngFor="let postiti of postitis" class="example-box"
+        cdkDragBoundary=".example-boundary" cdkDrag>
+        <p>{{postiti.descricao}}</p>
     </div>
+</div>
 
-    <mat-card>
-        <form class="fild-form">
+<mat-card>
+    <form class="fild-form">
 
 
-            <mat-form-field class="full-width">
-                <input matInput placeholder="O que está sentindo?" [(ngModel)]="postiti.descricao" name="first">
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="confirmar()">Desabafar </button>
-        </form>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="O que está sentindo?" [(ngModel)]="postiti.descricao" name="first">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="confirmar()">Desabafar </button>
+    </form>
 
-    </mat-card>
-
-</mat-sidenav-container>
+</mat-card>

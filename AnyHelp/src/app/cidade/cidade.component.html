@@ -55,7 +55,7 @@
 			</mat-card-title>
 
 			<mat-card-content>
-				<table mat-table [dataSource]="cidades" *ngIf="!msgerror">
+				<table mat-table [dataSource]="dataSource" *ngIf="!msgerror">
 					<!-- Nome Column -->
 					<ng-container matColumnDef="nome">
 						<th mat-header-cell *matHeaderCellDef> Nome  </th>

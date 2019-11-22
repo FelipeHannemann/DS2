@@ -59,7 +59,7 @@
             </mat-card-title>
 
             <mat-card-content>
-                <table mat-table [dataSource]="voluntarios" *ngIf="!msgerror">
+                <table mat-table [dataSource]="dataSource" *ngIf="!msgerror">
 
                     <!-- Nome Column -->
                     <ng-container matColumnDef="nome">

@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confirm-dialog/confirm-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-cidade',
@@ -20,6 +21,7 @@ export class CidadeComponent implements OnInit {
   public cidades: CidadeEntity[] = [];
   public estados: EstadoEntity[] = [];
 
+  public dataSource = new MatTableDataSource<CidadeEntity>();
 
   public cidade: CidadeEntity = new CidadeEntity();
 
@@ -39,7 +41,7 @@ export class CidadeComponent implements OnInit {
     this.service.find().subscribe(result => {
 
       this.cidades = result;
-
+      this.dataSource.data = this.cidades;
       this.estadoService.find().subscribe(result => {
 
         this.estados = result;
@@ -74,7 +76,7 @@ export class CidadeComponent implements OnInit {
       if (result) {
         this.loading = false;
         this.service.delete(cidade.id).subscribe(result => {
-          this.snackBar.open('Registro salvo com sucesso!', '', {
+          this.snackBar.open('Registro excluido com sucesso!', '', {
             duration: 3000
           });
         }, error => {
@@ -89,6 +91,7 @@ export class CidadeComponent implements OnInit {
     this.loading = true;
 
     this.service.save(this.cidade).subscribe(result => {
+      this.afterConfirm(result);
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
@@ -103,5 +106,9 @@ export class CidadeComponent implements OnInit {
 
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
+  }
+  private afterConfirm(cidade: CidadeEntity): void {
+    this.cidades.push(cidade);
+    this.dataSource.data = this.cidades;
   }
 }

@@ -11,6 +11,9 @@ export class ConsultaEntity {
     @Column({ length: 100, nullable: false })
     nome: string;
 
+    @Column({nullable: false })
+    dtconsulta: Date;
+
     @ManyToOne(type => PsicologoEntity, { eager: true })
     @JoinColumn({ name: 'psicologos' })
     psicologo: PsicologoEntity;

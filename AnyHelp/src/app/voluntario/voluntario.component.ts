@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../_components/confirm-dialog/confirm-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class VoluntarioComponent implements OnInit {
 
 
   public voluntario: VoluntarioEntity = new VoluntarioEntity();
+  public dataSource = new MatTableDataSource<VoluntarioEntity>();
+
 
   public msgerror: string;
   public loading: boolean;
@@ -44,7 +47,7 @@ export class VoluntarioComponent implements OnInit {
       this.cidadeService.find().subscribe(result => {
 
         this.cidades = result;
-
+        this.dataSource.data = this.voluntarios;
         this.loading = false;
 
       }, error => {
@@ -90,6 +93,7 @@ export class VoluntarioComponent implements OnInit {
     this.loading = true;
 
     this.service.save(this.voluntario).subscribe(result => {
+      this.afterConfirm(result);
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
@@ -104,5 +108,10 @@ export class VoluntarioComponent implements OnInit {
 
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
+  }
+  private afterConfirm(voluntario: VoluntarioEntity): void {
+    this.voluntarios.push(voluntario);
+    this.dataSource.data = this.voluntarios;
+    console.log('->', voluntario)
   }
 }
