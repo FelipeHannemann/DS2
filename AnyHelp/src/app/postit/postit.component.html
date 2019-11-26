@@ -1,14 +1,23 @@
 <div class="example-boundary">
+    <mat-card style="background:chartreuse; width: 170px;">
+
+
+    </mat-card>
     <div style="background:rgb(145, 195, 236);" *ngFor="let postiti of postitis" class="example-box"
         cdkDragBoundary=".example-boundary" cdkDrag>
+        <button mat-icon-button style="color: darkcyan;">
+            <mat-icon>favorite</mat-icon>
+        </button>
         <p>{{postiti.descricao}}</p>
+        <button mat-icon-button style="color: darkcyan;">
+            <mat-icon>favorite</mat-icon>
+        </button>
     </div>
+
 </div>
 
 <mat-card>
     <form class="fild-form">
-
-
         <mat-form-field class="full-width">
             <input matInput placeholder="O que está sentindo?" [(ngModel)]="postiti.descricao" name="first">
         </mat-form-field>

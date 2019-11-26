@@ -65,7 +65,7 @@ export class PostitComponent implements OnInit {
       if (result) {
         this.loading = false;
         this.service.delete(postiti.id).subscribe(result => {
-          this.snackBar.open('Continue...', '', {
+          this.snackBar.open('Continue... Desabafe...', '', {
             duration: 3000
           });
         }, error => {
@@ -81,7 +81,7 @@ export class PostitComponent implements OnInit {
 
     this.service.save(this.postiti).subscribe(result => {
       this.afterConfirm(result);
-      this.snackBar.open('Registro salvo com sucesso!', '', {
+      this.snackBar.open('Continue... Desabafe...', '', {
         duration: 3000
       });
     }, error => {
@@ -101,4 +101,7 @@ export class PostitComponent implements OnInit {
     this.postitis.push(postiti);
     this.dataSource.data = this.postitis;
   }
+}
+export class ExpansionOverviewExample {
+  panelOpenState = false;
 }

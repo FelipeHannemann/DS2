@@ -32,6 +32,7 @@ import { PostitComponent } from './postit/postit.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatExpansionModule
   ],
   providers: [],
   entryComponents: [ConfirmDialogComponent],
