@@ -17,6 +17,7 @@ export class PostitComponent implements OnInit {
 
   public postitis: PostitiEntity[] = [];
 
+  public tipo: String;
   public dataSource = new MatTableDataSource<PostitiEntity>();
 
   
@@ -64,6 +65,9 @@ export class PostitComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = false;
+        if (result.descricao === '') {
+          result.descricao = null;
+        }
         this.service.delete(postiti.id).subscribe(result => {
           this.snackBar.open('Continue... Desabafe...', '', {
             duration: 3000
@@ -101,7 +105,8 @@ export class PostitComponent implements OnInit {
     this.postitis.push(postiti);
     this.dataSource.data = this.postitis;
   }
+  changeTipoTemplate(tipo) {
+    this.tipo = tipo;
 }
-export class ExpansionOverviewExample {
-  panelOpenState = false;
+
 }

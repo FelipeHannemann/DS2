@@ -5,6 +5,8 @@ import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 export class PostitiEntity {
     @PrimaryGeneratedColumn()
     id:    number;
-    @Column({nullable:false,length: 260})
+    @Column({nullable:true,length: 260})
     descricao:  string;
+    @Column({nullable:true,length: 260})
+    ajuda:  string;
 }

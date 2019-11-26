@@ -35,4 +35,5 @@ export class PostitiService {
 export class PostitiEntity {
   id: number;
   descricao: string;
+  ajuda: string;
 }

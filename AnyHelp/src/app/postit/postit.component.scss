@@ -8,7 +8,7 @@
     width: 100%;
   }
   .mat-card{
-    position: fixed;
+  
     bottom: 0px;
     width: 70%; 
     vertical-align: 70%;  
@@ -36,6 +36,12 @@
                 0 1px 5px 0 rgb(7, 135, 240);
   mat-option{
     background:  rgb(145, 195, 236);
+  }
+  .mat-icon-button{
+    color: darkcyan;
+  }
+  .mat-icon-button:hover{
+    color: red;
   }
   }
   
