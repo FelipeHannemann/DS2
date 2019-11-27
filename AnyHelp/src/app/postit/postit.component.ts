@@ -65,9 +65,6 @@ export class PostitComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = false;
-        if (result.descricao === '') {
-          result.descricao = null;
-        }
         this.service.delete(postiti.id).subscribe(result => {
           this.snackBar.open('Continue... Desabafe...', '', {
             duration: 3000
@@ -82,7 +79,6 @@ export class PostitComponent implements OnInit {
   }
   public confirmar() {
     this.loading = true;
-
     this.service.save(this.postiti).subscribe(result => {
       this.afterConfirm(result);
       this.snackBar.open('Continue... Desabafe...', '', {

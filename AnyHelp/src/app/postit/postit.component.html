@@ -5,11 +5,11 @@
         <button mat-icon-button>
             <mat-icon>favorite</mat-icon>
         </button>
-        <mat-card *ngIf="postiti.descricao  !== null" style="background:chartreuse; width: 170px; height: 170px;">
+        <mat-card *ngIf="postiti.descricao  !== null && postiti.descricao !== ''" style="background:chartreuse; width: 170px; height: 170px;">
 
             <p style="text-align: center;">{{postiti.descricao}}</p>
         </mat-card>
-        <mat-card *ngIf="postiti.descricao === null" style="background:yellow; width: 170px; height: 170px;">
+        <mat-card *ngIf="postiti.descricao === null || postiti.descricao === ''" style="background:yellow; width: 170px; height: 170px;">
             <p style="text-align: center;">{{postiti.ajuda}}</p>
         </mat-card>
 
@@ -17,24 +17,21 @@
             <mat-icon>favorite</mat-icon>
         </button>
     </div>
-
 </div>
 
 <mat-card>
     <form class="fild-form">
         <mat-form-field class="full-width">
-
             <input matInput placeholder="O que está sentindo?" [(ngModel)]="postiti.descricao" name="first">
         </mat-form-field>
         <mat-form-field class="full-width">
             <input matInput placeholder="Escreva uma palavra de apoio" [(ngModel)]="postiti.ajuda" name="first">
         </mat-form-field>
-        <button mat-raised-button color="primary" [disabled]="!postiti.descricao" (click)="confirmar()"
-            style="margin-left: 10px;">Desabafar </button>
+        <button mat-raised-button color="primary" [disabled]="!postiti.descricao" (click)="confirmar()" style="margin-left: 10px;">Desabafar </button>
         <button mat-icon-button style="color: firebrick;">
             <mat-icon>favorite</mat-icon>
         </button>
-        <button mat-raised-button color="primary" (click)="confirmar()" [disabled]="!postiti.ajuda">Ajude Alguém
+        <button mat-raised-button color="primary" [disabled]="!postiti.ajuda" (click)="confirmar()">Ajude Alguém
         </button>
     </form>
 </mat-card>
