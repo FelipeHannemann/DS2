@@ -30,7 +30,9 @@
         <mat-toolbar>
             <span class="flex-spacer"></span>
             <button mat-button (click)="sidenav.close()">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
+            <button mat-raised-button color="primary"
+                [disabled]="!psicologo.nome || !psicologo.crp || !psicologo.nomeclinica || !psicologo.email"
+                (click)="confirmar()">Confirmar</button>
         </mat-toolbar>
 
     </mat-sidenav>

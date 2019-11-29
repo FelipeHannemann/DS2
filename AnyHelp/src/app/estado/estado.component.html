@@ -23,7 +23,7 @@
         <mat-toolbar>
             <span class="flex-spacer"></span>
             <button mat-button (click)="sidenav.close()">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
+            <button mat-raised-button color="primary" [disabled]="!estado.sigla || !estado.nome" (click)="confirmar()">Confirmar</button>
         </mat-toolbar>
 
     </mat-sidenav>

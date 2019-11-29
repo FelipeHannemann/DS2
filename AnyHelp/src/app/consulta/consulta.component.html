@@ -15,8 +15,8 @@
 			</mat-form-field>
 
 			<mat-form-field>
-				<input matInput [matDatepicker]="picker" placeholder="Data Consulta"
-					[(ngModel)]="consulta.dtconsulta" [disabled]="consulta.id">
+				<input matInput [matDatepicker]="picker" placeholder="Data Consulta" [(ngModel)]="consulta.dtconsulta"
+					[disabled]="consulta.id">
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 			</mat-form-field>
@@ -43,7 +43,9 @@
 		<mat-toolbar>
 			<span class="flex-spacer"></span>
 			<button mat-button (click)="sidenav.close()">Cancelar</button>
-			<button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
+			<button mat-raised-button color="primary"
+				[disabled]="!consulta.nome || !consulta.dtconsulta || !consulta.voluntario || !consulta.psicologo"
+				(click)="confirmar()">Confirmar</button>
 		</mat-toolbar>
 
 	</mat-sidenav>
